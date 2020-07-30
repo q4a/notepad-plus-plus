@@ -1,0 +1,49 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build-windows:
+    runs-on: windows-2016
+    strategy:
+      fail-fast: false
+      matrix:
+        configuration: [Unicode Debug]
+        include:
+          - platform: Win32
+            archi: x86
+            platform_input: Win32
+    
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Setup MSBuild.exe
+      uses: warrenbuckley/Setup-MSBuild@v1
+    
+    - name: install
+      shell: cmd
+      run: |
+        if "${{ matrix.archi }}" NEQ "" call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" ${{ matrix.archi }}
+        
+    - name: build scintilla
+      shell: cmd
+        echo "Configuration: ${{ matrix.configuration }}"
+        echo "Platform: ${{ matrix.platform }}"
+        cd "%GITHUB_WORKSPACE%"\scintilla\win32
+        if "${{ matrix.configuration }}"=="Unicode Debug" set scintilla_debug=DEBUG=1
+        if "${{ matrix.configuration }}"=="Unicode Release" set scintilla_debug=
+        if "${{ matrix.archi }}" NEQ "" nmake SUPPORT_XP=1 %scintilla_debug% -f scintilla.mak
+        if "{{ matrix.platform }}"=="mingw-w64_810_X64" mingw32-make -j%NUMBER_OF_PROCESSORS%
+    
+    - name: VS build npp
+      if: matrix.archi != ''
+      working-directory: PowerEditor\visual.net
+      run: msbuild notepadPlus.vcxproj /p:configuration=${{ matrix.configuration }} /p:platform=${{ matrix.platform }} /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+    
+    - name: MinGW build npp
+      if: matrix.platform == 'mingw-w64_810_X64'
+      shell: cmd
+      run: |
+        cd %GITHUB_WORKSPACE%\PowerEditor\gcc\
+        mingw32-make -j%NUMBER_OF_PROCESSORS%
