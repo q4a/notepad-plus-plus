@@ -28,7 +28,10 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include "Platform.h"
+#ifdef NPP_PLATFORM_WINDOWS
 #include <windows.h>
+#endif 
 #include <iso646.h>
 #include <cstdint>
 

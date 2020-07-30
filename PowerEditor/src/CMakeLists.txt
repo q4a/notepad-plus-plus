@@ -359,7 +359,7 @@ SET(rcFiles
 
 IF (WIN32)
 	SET(option WIN32)
-	SET(win32_LIBRARIES comctl32 shlwapi dbghelp version crypt32 wintrust sensapi winmm)
+	SET(req_LIBRARIES comctl32 shlwapi dbghelp version crypt32 wintrust sensapi winmm)
 if ( MSVC )
 	#do not use for mingw builds
 	SET(CMAKE_CXX_FLAGS "/EHa /MP /W4")
@@ -369,6 +369,17 @@ else ( MSVC )
 	SET(CMAKE_CXX_FLAGS "-include../gcc/include/various.h -std=c++17 -fpermissive")
 	SET(defs -DUNICODE -D_UNICODE -D_USE_64BIT_TIME_T -DTIXML_USE_STL -DTIXMLA_USE_STL )
 endif ( MSVC )
+
+ELSE ( WIN32 )
+
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+
+SET(req_LIBRARIES Qt5::Widgets)
+
+find_package(Qt5 COMPONENTS Widgets REQUIRED)
+
 ENDIF (WIN32)
 
 ADD_DEFINITIONS(${defs})
@@ -377,5 +388,5 @@ INCLUDE_DIRECTORIES(${projIncludDir})
 
 ADD_EXECUTABLE(notepad++ ${option} ${src_files} ${include_files} ${rcFiles})
 
-TARGET_LINK_LIBRARIES (notepad++ ${win32_LIBRARIES})
+TARGET_LINK_LIBRARIES (notepad++ ${req_LIBRARIES})
 

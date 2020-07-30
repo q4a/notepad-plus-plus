@@ -30,11 +30,14 @@
 //
 
 #include <memory>
+#include "Platform.h"
+#ifdef NPP_PLATFORM_WINDOWS
 #include <windows.h>
 #include <wintrust.h>
 #include <softpub.h>
 #include <wincrypt.h>
 #include <sensapi.h>
+#endif
 #include <iomanip>
 #include "verifySignedfile.h"
 #include "Common.h"
