@@ -3,7 +3,7 @@ name: CI
 on: [push, pull_request]
 
 jobs:
-  build-linux:
+  linux:
     runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
@@ -19,7 +19,7 @@ jobs:
         cmake ../PowerEditor/src -DCMAKE_BUILD_TYPE=Debug
         make -j$(nproc)
 
-  build-cmake-test:
+  cmake-test:
     runs-on: windows-2016
     strategy:
       fail-fast: false
@@ -38,7 +38,7 @@ jobs:
         nmake
 
 
-  build-windows:
+  windows:
     runs-on: windows-2016
     strategy:
       fail-fast: false
