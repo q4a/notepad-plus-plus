@@ -84,6 +84,7 @@ SET(src_files
 			./WinControls/PluginsAdmin/pluginsAdmin.cpp
 			./WinControls/ReadDirectoryChanges/ReadDirectoryChanges.cpp
 			./WinControls/ReadDirectoryChanges/ReadDirectoryChangesPrivate.cpp
+			./WinControls/ReadDirectoryChanges/ReadFileChanges.cpp
 			./WinControls/TabBar/ControlsTab.cpp
 			./WinControls/DockingWnd/DockingCont.cpp
 			./WinControls/DockingWnd/DockingManager.cpp
@@ -215,6 +216,7 @@ SET(include_files
 			./WinControls/PluginsAdmin/pluginsAdminRes.h
 			./WinControls/ReadDirectoryChanges/ReadDirectoryChanges.h
 			./WinControls/ReadDirectoryChanges/ReadDirectoryChangesPrivate.h
+			./WinControls/ReadDirectoryChanges/ReadFileChanges.h
 			./WinControls/ReadDirectoryChanges/ThreadSafeQueue.h
 			./WinControls/TabBar/ControlsTab.h
 			./WinControls/DockingWnd/Docking.h
@@ -357,7 +359,7 @@ SET(rcFiles
 
 IF (WIN32)
 	SET(option WIN32)
-	SET(win32_LIBRARIES comctl32 shlwapi dbghelp version crypt32 wintrust sensapi)
+	SET(win32_LIBRARIES comctl32 shlwapi dbghelp version crypt32 wintrust sensapi winmm)
 if ( MSVC )
 	#do not use for mingw builds
 	SET(CMAKE_CXX_FLAGS "/EHa /MP /W4")
