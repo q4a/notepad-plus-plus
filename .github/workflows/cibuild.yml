@@ -1,0 +1,73 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build-cmake-test:
+    runs-on: windows-2016
+    strategy:
+      fail-fast: false
+    
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    
+    - name: CMake build npp
+      shell: cmd
+      run: |
+        call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvars32.bat"
+        mkdir bin && cd bin
+        cmake ..\PowerEditor\src -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Debug
+        nmake
+
+
+  build-windows:
+    runs-on: windows-2016
+    strategy:
+      fail-fast: false
+      matrix:
+        configuration: [Unicode Debug]
+        platform: [Win32, x64, mingw-w64_810_X64]
+        include:
+          - platform: Win32
+            archi: x86
+            platform_input: Win32
+          
+          - platform: x64
+            archi: amd64
+            platform_input: x64
+          
+          - platform: mingw-w64_810_X64
+            platform_input: mingw
+    
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - name: Setup MSBuild.exe
+      uses: warrenbuckley/Setup-MSBuild@v1
+    
+    - name: build scintilla
+      shell: cmd
+      run: |
+        if "${{ matrix.archi }}" NEQ "" call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" ${{ matrix.archi }}
+        echo "Configuration: ${{ matrix.configuration }}"
+        echo "Platform: ${{ matrix.platform }}"
+        cd "%GITHUB_WORKSPACE%"\scintilla\win32
+        if "${{ matrix.configuration }}"=="Unicode Debug" set scintilla_debug=DEBUG=1
+        if "${{ matrix.configuration }}"=="Unicode Release" set scintilla_debug=
+        if "${{ matrix.archi }}" NEQ "" nmake SUPPORT_XP=1 %scintilla_debug% -f scintilla.mak
+        if "${{ matrix.platform }}"=="mingw-w64_810_X64" mingw32-make -j%NUMBER_OF_PROCESSORS%
+    
+    - name: VS build npp
+      if: matrix.archi != ''
+      working-directory: PowerEditor\visual.net
+      run: msbuild notepadPlus.vcxproj /p:configuration="${{ matrix.configuration }}" /p:platform="${{ matrix.platform }}"
+    
+    - name: MinGW build npp
+      if: matrix.platform == 'mingw-w64_810_X64'
+      shell: cmd
+      run: |
+        cd %GITHUB_WORKSPACE%\PowerEditor\gcc\
+        mingw32-make -j%NUMBER_OF_PROCESSORS%
