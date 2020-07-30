@@ -8,7 +8,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        configuration: [Unicode Debug]
+        configuration: [Unicode Release, Unicode Debug]
         platform: [Win32, x64]
         include:
           - platform: Win32
