@@ -28,6 +28,7 @@ jobs:
         
     - name: build scintilla
       shell: cmd
+      run: |
         echo "Configuration: ${{ matrix.configuration }}"
         echo "Platform: ${{ matrix.platform }}"
         cd "%GITHUB_WORKSPACE%"\scintilla\win32
