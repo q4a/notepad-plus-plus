@@ -9,7 +9,7 @@ jobs:
       fail-fast: false
       matrix:
         configuration: [Unicode Release, Unicode Debug]
-        platform: [Win32, x64]
+        platform: [Win32, x64, mingw-w64_810_X64]
         include:
           - platform: Win32
             archi: x86
