@@ -18,6 +18,9 @@ jobs:
           - platform: x64
             archi: amd64
             platform_input: x64
+          
+          - platform: mingw-w64_810_X64
+            platform_input: mingw
     
     steps:
     - uses: actions/checkout@v2
