@@ -21,14 +21,10 @@ jobs:
     - name: Setup MSBuild.exe
       uses: warrenbuckley/Setup-MSBuild@v1
     
-    - name: install
-      shell: cmd
-      run: |
-        if "${{ matrix.archi }}" NEQ "" call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" ${{ matrix.archi }}
-        
     - name: build scintilla
       shell: cmd
       run: |
+        if "${{ matrix.archi }}" NEQ "" call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Auxiliary\Build\vcvarsall.bat" ${{ matrix.archi }}
         echo "Configuration: ${{ matrix.configuration }}"
         echo "Platform: ${{ matrix.platform }}"
         cd "%GITHUB_WORKSPACE%"\scintilla\win32
