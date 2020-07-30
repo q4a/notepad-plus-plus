@@ -13,6 +13,13 @@ jobs:
           - platform: Win32
             archi: x86
             platform_input: Win32
+          
+          - platform: x64
+            archi: amd64
+            platform_input: x64
+          
+          - platform: mingw-w64_810_X64
+            platform_input: mingw
     
     steps:
     - uses: actions/checkout@v2
@@ -36,7 +43,7 @@ jobs:
     - name: VS build npp
       if: matrix.archi != ''
       working-directory: PowerEditor\visual.net
-      run: msbuild notepadPlus.vcxproj /p:configuration=${{ matrix.configuration }} /p:platform=${{ matrix.platform }} /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+      run: msbuild notepadPlus.vcxproj /p:configuration="${{ matrix.configuration }}" /p:platform="${{ matrix.platform }}" /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
     
     - name: MinGW build npp
       if: matrix.platform == 'mingw-w64_810_X64'
