@@ -3,6 +3,22 @@ name: CI
 on: [push, pull_request]
 
 jobs:
+  build-linux:
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+    
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    
+    - name: CMake build npp
+      run: |
+        mkdir bin && cd bin
+        cmake ../PowerEditor/src -DCMAKE_BUILD_TYPE=Debug
+        make -j$(nproc)
+
   build-cmake-test:
     runs-on: windows-2016
     strategy:
