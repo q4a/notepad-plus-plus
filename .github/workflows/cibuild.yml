@@ -39,7 +39,7 @@ jobs:
         if "${{ matrix.configuration }}"=="Unicode Debug" set scintilla_debug=DEBUG=1
         if "${{ matrix.configuration }}"=="Unicode Release" set scintilla_debug=
         if "${{ matrix.archi }}" NEQ "" nmake SUPPORT_XP=1 %scintilla_debug% -f scintilla.mak
-        if "{{ matrix.platform }}"=="mingw-w64_810_X64" mingw32-make -j%NUMBER_OF_PROCESSORS%
+        if "${{ matrix.platform }}"=="mingw-w64_810_X64" mingw32-make -j%NUMBER_OF_PROCESSORS%
     
     - name: VS build npp
       if: matrix.archi != ''
