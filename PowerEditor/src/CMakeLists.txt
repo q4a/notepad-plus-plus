@@ -139,7 +139,7 @@ SET(src_files
 			./uchardet/nsUniversalDetector.cpp
 			./uchardet/nsUTF8Prober.cpp
 			./Parameters.cpp
-			./Misc/PluginsManager/PluginsManager.cpp
+			./MISC/PluginsManager/PluginsManager.cpp
 			./WinControls/Preference/preferenceDlg.cpp
 			./ScitillaComponent/Printer.cpp
 			./WinControls/ProjectPanel/ProjectPanel.cpp
