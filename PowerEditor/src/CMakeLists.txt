@@ -246,7 +246,7 @@ SET(include_files
 			./lesDlgs.h
 			./WinControls/AnsiCharPanel/ListView.h
 			./localization.h
-			./localizationstring.h
+			./localizationString.h
 			./menuCmdID.h
 			./MISC/Exception/MiniDumper.h
 			./Notepad_plus.h
