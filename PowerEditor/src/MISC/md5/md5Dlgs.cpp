@@ -22,7 +22,10 @@
 #include "md5Dlgs_rc.h"
 #include "FileDialog.h"
 #include "Parameters.h"
+#include "NppPlatform.h"
+#ifdef NPP_PLATFORM_WINDOWS
 #include <shlwapi.h>
+#endif
 
 INT_PTR CALLBACK HashFromFilesDlg::run_dlgProc(UINT message, WPARAM wParam, LPARAM /*lParam*/)
 {

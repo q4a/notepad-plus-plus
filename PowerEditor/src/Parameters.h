@@ -38,7 +38,6 @@
 #include "ContextMenu.h"
 #include "dpiManager.h"
 #include <assert.h>
-#include <tchar.h>
 
 class NativeLangSpeaker;
 

@@ -68,7 +68,13 @@ public :
 
 	bool isCheckedOrNot(int checkControlID) const
 	{
+#ifdef NPP_PLATFORM_WINDOWS
 		return (BST_CHECKED == ::SendMessage(::GetDlgItem(_hSelf, checkControlID), BM_GETCHECK, 0, 0));
+#else
+		// ADDLINUX
+		std::cout << "ADDLINUX StaticDialog::isCheckedOrNot";
+		return true;
+#endif
 	}
 
     virtual void destroy() override;

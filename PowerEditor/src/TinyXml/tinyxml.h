@@ -58,7 +58,10 @@ distribution.
 
 #include <assert.h>
 
+#include "NppPlatform.h"
+#ifdef NPP_PLATFORM_WINDOWS
 #include <tchar.h>
+#endif
 #include <string>
 
 #include "Common.h"

@@ -30,7 +30,7 @@
 //
 
 #include <memory>
-#include "Platform.h"
+#include "NppPlatform.h"
 #ifdef NPP_PLATFORM_WINDOWS
 #include <windows.h>
 #include <wintrust.h>
@@ -354,6 +354,7 @@ bool SecurityGard::verifySignedLibrary(const std::wstring& filepath, NppModule m
 	return status;
 #else
 	// ADDLINUX
+	std::cout << "ADDLINUX SecurityGard::verifySignedLibrary";
 	return true;
 #endif
 

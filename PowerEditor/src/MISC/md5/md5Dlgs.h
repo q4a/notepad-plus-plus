@@ -37,8 +37,14 @@ protected :
 	hashType _ht = hash_md5;
 
 	static LRESULT CALLBACK HashPathEditStaticProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) {
-		const auto dlg = (HashFromFilesDlg *)(::GetWindowLongPtr(hwnd, GWLP_USERDATA));
+#ifdef NPP_PLATFORM_WINDOWS
+		const auto dlg = (HashFromFilesDlg*)(::GetWindowLongPtr(hwnd, GWLP_USERDATA));
 		return (run_textEditProc(dlg->_oldHashPathEditProc, hwnd, message, wParam, lParam));
+#else
+		// ADDLINUX
+		std::cout << "ADDLINUX HashFromFilesDlg::HashPathEditStaticProc";
+		return 0;
+#endif
 	};
 
 	static LRESULT CALLBACK HashResultStaticProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) {

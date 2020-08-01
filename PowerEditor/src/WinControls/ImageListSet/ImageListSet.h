@@ -29,8 +29,11 @@
 #pragma once
 
 #include <vector>
+#include "NppPlatform.h"
+#ifdef NPP_PLATFORM_WINDOWS
 #include <windows.h>
 #include <commctrl.h>
+#endif
 
 const int nbMax = 45;
 #define	IDI_SEPARATOR_ICON -1
