@@ -142,7 +142,7 @@ protected:
 			{
 				if (_allocLen)
 					delete[] _str;
-				_allocLen = max(size, initSize);
+				_allocLen = (std::max)(size, static_cast<size_t>(initSize));
 				_str = new T[_allocLen];
 			}
 		}

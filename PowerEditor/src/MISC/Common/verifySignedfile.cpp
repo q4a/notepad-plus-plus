@@ -98,7 +98,7 @@ bool SecurityGard::checkSha256(const std::wstring& filePath, NppModule module2ch
 
 	wchar_t sha2hashStr[65] = { '\0' };
 	for (size_t i = 0; i < 32; i++)
-		wsprintf(sha2hashStr + i * 2, TEXT("%02x"), sha2hash[i]);
+		swprintf(sha2hashStr + i * 2, sizeof(sha2hashStr + i * 2), TEXT("%02x"), sha2hash[i]);
 
 	std::vector<std::wstring>* moduleSha256 = nullptr;
 	if (module2check == nm_scilexer)
@@ -139,6 +139,7 @@ bool SecurityGard::verifySignedLibrary(const std::wstring& filepath, NppModule m
 	// Signature verification
 	//
 
+#ifdef NPP_PLATFORM_WINDOWS
 	// Initialize the WINTRUST_FILE_INFO structure.
 	LPCWSTR pwszfilepath = filepath.c_str();
 	WINTRUST_FILE_INFO file_data = { 0 };
@@ -351,4 +352,9 @@ bool SecurityGard::verifySignedLibrary(const std::wstring& filepath, NppModule m
 	if (pSignerInfo != NULL)  LocalFree(pSignerInfo);
 
 	return status;
+#else
+	// ADDLINUX
+	return true;
+#endif
+
 }

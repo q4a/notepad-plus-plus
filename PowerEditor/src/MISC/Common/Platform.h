@@ -12,12 +12,23 @@
 
 #include <QtWidgets>
 
-typedef int32_t LONG;
+typedef unsigned long DWORD;
+typedef long LONG;
 typedef unsigned int UINT;
 typedef wchar_t TCHAR, *PTCHAR;
+typedef char* PTSTR, LPTSTR;
+typedef const char* LPCTSTR;
+typedef const wchar_t* LPCWSTR;
+
 typedef QWidget HWND;
+typedef QRgb COLORREF;
+typedef QLocale _locale_t;
+
+// ADDLINUX
+typedef char HINSTANCE;
 
 #define TEXT(quote) L##quote
+//#define wsprintf sprintf
 
 typedef struct tagRECT
 {
@@ -26,5 +37,11 @@ typedef struct tagRECT
     LONG    right;
     LONG    bottom;
 } RECT;
+
+#include <iostream>
+inline void OutputDebugString(const wchar_t *str) // for linux debugger
+{
+    std::cerr << str;
+}
 
 #endif
