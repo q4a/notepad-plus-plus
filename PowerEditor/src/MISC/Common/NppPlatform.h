@@ -26,6 +26,7 @@
 
 #define WINAPI
 #define CALLBACK
+#define MAX_PATH PATH_MAX + 1
 
 #if defined(XR_ARCHITECTURE_X64) || defined(XR_ARCHITECTURE_ARM64)
 typedef int64_t INT_PTR;
@@ -57,6 +58,8 @@ typedef QLocale _locale_t;
 typedef QBitmap HBITMAP;
 typedef QPixmap HICON; // or QImage
 typedef QFileDialog DLGTEMPLATE;
+typedef QFileDialog OPENFILENAME;
+
 
 typedef LRESULT (CALLBACK* WNDPROC)(HWND, UINT, WPARAM, LPARAM);
 

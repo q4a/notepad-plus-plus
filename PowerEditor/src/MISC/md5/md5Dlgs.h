@@ -48,8 +48,14 @@ protected :
 	};
 
 	static LRESULT CALLBACK HashResultStaticProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) {
+#ifdef NPP_PLATFORM_WINDOWS
 		const auto dlg = (HashFromFilesDlg *)(::GetWindowLongPtr(hwnd, GWLP_USERDATA));
 		return (run_textEditProc(dlg->_oldHashResultProc, hwnd, message, wParam, lParam));
+#else
+		// ADDLINUX
+		std::cout << "ADDLINUX HashFromFilesDlg::HashResultStaticProc";
+		return 0;
+#endif
 	};
 
 private :
@@ -73,13 +79,25 @@ protected :
 	hashType _ht = hash_md5;
 
 	static LRESULT CALLBACK HashTextEditStaticProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) {
+#ifdef NPP_PLATFORM_WINDOWS
 		const auto dlg = (HashFromTextDlg *)(::GetWindowLongPtr(hwnd, GWLP_USERDATA));
 		return (run_textEditProc(dlg->_oldHashTextEditProc, hwnd, message, wParam, lParam));
+#else
+		// ADDLINUX
+		std::cout << "ADDLINUX HashFromTextDlg::HashTextEditStaticProc";
+		return 0;
+#endif
 	};
 
 	static LRESULT CALLBACK HashResultStaticProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam) {
+#ifdef NPP_PLATFORM_WINDOWS
 		const auto dlg = (HashFromTextDlg *)(::GetWindowLongPtr(hwnd, GWLP_USERDATA));
 		return (run_textEditProc(dlg->_oldHashResultProc, hwnd, message, wParam, lParam));
+#else
+		// ADDLINUX
+		std::cout << "ADDLINUX HashFromTextDlg::HashResultStaticProc";
+		return 0;
+#endif
 	};
 
 private :

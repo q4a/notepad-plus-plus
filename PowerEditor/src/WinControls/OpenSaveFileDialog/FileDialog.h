@@ -48,19 +48,27 @@ public:
 	void setExtFilter(const TCHAR *, const TCHAR *, ...);
 	
 	int setExtsFilter(const TCHAR *extText, const TCHAR *exts);
-	void setDefFileName(const TCHAR *fn){ wcscpy_s(_fileName, fn);}
+	void setDefFileName(const TCHAR *fn){ wcscpy(_fileName, fn);}
 	void setDefExt(const TCHAR *ext){ _defExt = ext;}
 
 	TCHAR * doSaveDlg();
 	stringVector * doOpenMultiFilesDlg();
 	TCHAR * doOpenSingleFileDlg();
-	bool isReadOnly() {return _ofn.Flags & OFN_READONLY;};
+	bool isReadOnly() {
+#ifdef NPP_PLATFORM_WINDOWS
+		return _ofn.Flags & OFN_READONLY;
+#else
+		// ADDLINUX
+		std::cout << "ADDLINUX FileDialog::isReadOnly";
+		return false;
+#endif
+	};
     void setExtIndex(int extTypeIndex) {_extTypeIndex = extTypeIndex;};
 
 	static int _dialogFileBoxId;
 protected :
     static UINT_PTR CALLBACK OFNHookProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-    BOOL APIENTRY run(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+    bool APIENTRY run(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 private:
 	TCHAR _fileName[MAX_PATH*8];
