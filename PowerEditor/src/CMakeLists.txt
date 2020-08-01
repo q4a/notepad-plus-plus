@@ -27,7 +27,7 @@ SET(projIncludDir	../../scintilla/include/
 					./MISC/SysMsg/
 					./WinControls/StatusBar/
 					./WinControls/StaticDialog/RunDlg/
-					./tinyxml/
+					./TinyXml/
 					./WinControls/ColourPicker/
 					./Win32Explr/
 					./MISC/RegExt/
@@ -43,7 +43,7 @@ SET(projIncludDir	../../scintilla/include/
 					./WinControls/ToolTip/
 					./MISC/Exception/
 					./MISC/Common/
-					./tinyxml/tinyXmlA/
+					./TinyXml/tinyXmlA/
 					./WinControls/AnsiCharPanel/
 					./WinControls/ClipboardHistory/
 					./WinControls/FindCharsInRange/
