@@ -32,7 +32,10 @@
 #include "ColourPicker.h"
 #include "Parameters.h"
 #include "URLCtrl.h"
+#include "NppPlatform.h"
+#ifdef NPP_PLATFORM_WINDOWS
 #include "tchar.h"
+#endif
 #include "SciLexer.h"
 #include <unordered_map>
 

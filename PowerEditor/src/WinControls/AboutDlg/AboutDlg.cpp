@@ -26,9 +26,11 @@
 // Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 
-
+#include "NppPlatform.h"
+#ifdef NPP_PLATFORM_WINDOWS
 #include <shlobj.h>
 #include <uxtheme.h>
+#endif
 
 #include "AboutDlg.h"
 #include "Parameters.h"
@@ -38,6 +40,7 @@
 
 INT_PTR CALLBACK AboutDlg::run_dlgProc(UINT message, WPARAM wParam, LPARAM lParam)
 {
+#ifdef NPP_PLATFORM_WINDOWS
 	switch (message)
 	{
         case WM_INITDIALOG :
@@ -111,6 +114,11 @@ INT_PTR CALLBACK AboutDlg::run_dlgProc(UINT message, WPARAM wParam, LPARAM lPara
 		}
 	}
 	return FALSE;
+#else
+	// ADDLINUX
+	std::cout << "ADDLINUX AboutDlg::run_dlgProc";
+	return 0;
+#endif
 }
 
 void AboutDlg::doDialog()
@@ -125,6 +133,7 @@ void AboutDlg::doDialog()
 
 INT_PTR CALLBACK DebugInfoDlg::run_dlgProc(UINT message, WPARAM wParam, LPARAM /*lParam*/)
 {
+#ifdef NPP_PLATFORM_WINDOWS
 	switch (message)
 	{
 		case WM_INITDIALOG:
@@ -301,6 +310,11 @@ INT_PTR CALLBACK DebugInfoDlg::run_dlgProc(UINT message, WPARAM wParam, LPARAM /
 		}
 	}
 	return FALSE;
+#else
+// ADDLINUX
+std::cout << "ADDLINUX DebugInfoDlg::run_dlgProc";
+return 0;
+#endif
 }
 
 void DebugInfoDlg::doDialog()
@@ -314,6 +328,7 @@ void DebugInfoDlg::doDialog()
 
 void DoSaveOrNotBox::doDialog(bool isRTL)
 {
+#ifdef NPP_PLATFORM_WINDOWS
 	
 	if (isRTL)
 	{
@@ -324,10 +339,15 @@ void DoSaveOrNotBox::doDialog(bool isRTL)
 	}
 	else
 		::DialogBoxParam(_hInst, MAKEINTRESOURCE(IDD_DOSAVEORNOTBOX), _hParent, dlgProc, reinterpret_cast<LPARAM>(this));
+#else
+	// ADDLINUX
+	std::cout << "ADDLINUX DoSaveOrNotBox::doDialog";
+#endif
 }
 
 void DoSaveOrNotBox::changeLang()
 {
+#ifdef NPP_PLATFORM_WINDOWS
 	generic_string msg;
 	generic_string defaultMessage = TEXT("Save file \"$STR_REPLACE$\" ?");
 	NativeLangSpeaker* nativeLangSpeaker = NppParameters::getInstance().getNativeLangSpeaker();
@@ -345,10 +365,15 @@ void DoSaveOrNotBox::changeLang()
 
 	msg = stringReplace(msg, TEXT("$STR_REPLACE$"), _fn);
 	::SetDlgItemText(_hSelf, IDC_DOSAVEORNOTTEX, msg.c_str());
+#else
+	// ADDLINUX
+	std::cout << "ADDLINUX DoSaveOrNotBox::changeLang";
+#endif
 }
 
 INT_PTR CALLBACK DoSaveOrNotBox::run_dlgProc(UINT message, WPARAM wParam, LPARAM /*lParam*/)
 {
+#ifdef NPP_PLATFORM_WINDOWS
 	switch (message)
 	{
 		case WM_INITDIALOG :
@@ -403,4 +428,9 @@ INT_PTR CALLBACK DoSaveOrNotBox::run_dlgProc(UINT message, WPARAM wParam, LPARAM
 		default:
 			return FALSE;
 	}
+#else
+	// ADDLINUX
+	std::cout << "ADDLINUX DoSaveOrNotBox::run_dlgProc";
+	return 0;
+#endif
 }

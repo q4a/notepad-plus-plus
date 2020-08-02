@@ -31,7 +31,10 @@
 #include "Window.h"
 #include "Common.h"
 
+#include "NppPlatform.h"
+#ifdef NPP_PLATFORM_WINDOWS
 #include <commctrl.h>
+#endif
 
 struct columnInfo {
 	size_t _width;

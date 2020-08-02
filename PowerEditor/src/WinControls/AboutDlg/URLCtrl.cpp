@@ -106,6 +106,7 @@ static BYTE ANDMask[128] =
 
 void URLCtrl::create(HWND itemHandle, const TCHAR * link, COLORREF linkColor)
 {
+#ifdef NPP_PLATFORM_WINDOWS
 	// turn on notify style
     ::SetWindowLongPtr(itemHandle, GWL_STYLE, ::GetWindowLongPtr(itemHandle, GWL_STYLE) | SS_NOTIFY);
 
@@ -127,9 +128,14 @@ void URLCtrl::create(HWND itemHandle, const TCHAR * link, COLORREF linkColor)
 
 	// save hwnd
 	_hSelf = itemHandle;
+#else
+	// ADDLINUX
+	std::cout << "ADDLINUX URLCtrl::create - link";
+#endif
 }
 void URLCtrl::create(HWND itemHandle, int cmd, HWND msgDest)
 {
+#ifdef NPP_PLATFORM_WINDOWS
 	// turn on notify style
     ::SetWindowLongPtr(itemHandle, GWL_STYLE, ::GetWindowLongPtr(itemHandle, GWL_STYLE) | SS_NOTIFY);
 
@@ -147,18 +153,29 @@ void URLCtrl::create(HWND itemHandle, int cmd, HWND msgDest)
 
 	// save hwnd
 	_hSelf = itemHandle;
+#else
+	// ADDLINUX
+	std::cout << "ADDLINUX URLCtrl::create - cmd";
+	return 0;
+#endif
 }
 
 void URLCtrl::destroy()
 {
+#ifdef NPP_PLATFORM_WINDOWS
     	if (_hfUnderlined)
             ::DeleteObject(_hfUnderlined);
         if (_hCursor)
             ::DestroyCursor(_hCursor);
+#else
+	// ADDLINUX
+	std::cout << "ADDLINUX URLCtrl::destroy";
+#endif
 }
 
 void URLCtrl::action()
 {
+#ifdef NPP_PLATFORM_WINDOWS
 	if (_cmdID)
 	{
 		::SendMessage(_msgDest?_msgDest:_hParent, WM_COMMAND, _cmdID, 0);
@@ -182,10 +199,16 @@ void URLCtrl::action()
 			::ShellExecute(NULL, TEXT("open"), szWinText, NULL, NULL, SW_SHOWNORMAL);
 		}
 	}
+#else
+	// ADDLINUX
+	std::cout << "ADDLINUX URLCtrl::action";
+	return 0;
+#endif
 }
 
 LRESULT URLCtrl::runProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
 {
+#ifdef NPP_PLATFORM_WINDOWS
     switch(Message)
     {
 	    // Free up the structure we allocated
@@ -297,4 +320,9 @@ LRESULT URLCtrl::runProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
 		    return HTCLIENT;
     }
     return ::CallWindowProc(_oldproc, hwnd, Message, wParam, lParam);
+#else
+// ADDLINUX
+std::cout << "ADDLINUX URLCtrl::runProc";
+return 0;
+#endif
 }

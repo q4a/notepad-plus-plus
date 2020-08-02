@@ -32,12 +32,18 @@
 
 void Process::run(bool isElevationRequired) const
 {
+#ifdef NPP_PLATFORM_WINDOWS
 	const TCHAR *opVerb = isElevationRequired ? TEXT("runas") : TEXT("open");
 	::ShellExecute(NULL, opVerb, _command.c_str(), _args.c_str(), _curDir.c_str(), SW_SHOWNORMAL);
+#else
+	// ADDLINUX
+	std::cout << "ADDLINUX Process::run";
+#endif
 }
 
 unsigned long Process::runSync(bool isElevationRequired) const
 {
+#ifdef NPP_PLATFORM_WINDOWS
 	SHELLEXECUTEINFO ShExecInfo = { 0 };
 	ShExecInfo.cbSize = sizeof(SHELLEXECUTEINFO);
 	ShExecInfo.fMask = SEE_MASK_NOCLOSEPROCESS;
@@ -60,4 +66,9 @@ unsigned long Process::runSync(bool isElevationRequired) const
 	}
 
 	return exitCode;
+#else
+	// ADDLINUX
+	std::cout << "ADDLINUX Process::runSync";
+	return 1;
+#endif
 }

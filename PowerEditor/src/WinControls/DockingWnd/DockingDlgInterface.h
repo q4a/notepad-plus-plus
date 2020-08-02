@@ -31,7 +31,10 @@
 #include "Docking.h"
 
 #include <assert.h>
+#include "NppPlatform.h"
+#ifdef NPP_PLATFORM_WINDOWS
 #include <shlwapi.h>
+#endif
 #include "Common.h"
 #include "StaticDialog.h"
 

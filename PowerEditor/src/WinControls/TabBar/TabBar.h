@@ -35,8 +35,11 @@
 #include "menuCmdID.h"
 #include "resource.h"
 #include <stdint.h>
+#include "NppPlatform.h"
+#ifdef NPP_PLATFORM_WINDOWS
 #include <windows.h>
 #include <commctrl.h>
+#endif
 #include "Window.h"
 
 //Notification message

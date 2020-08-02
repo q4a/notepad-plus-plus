@@ -27,7 +27,9 @@
 #define WINAPI
 #define CALLBACK
 #define __inout
+#define __cdecl
 
+#define CP_ACP 0
 #define MAX_PATH PATH_MAX + 1
 #define SM_CXSCREEN 0
 #define SM_CYSCREEN 1
@@ -46,6 +48,7 @@ typedef void* HANDLE, HGLOBAL;
 typedef UINT_PTR WPARAM;
 typedef LONG_PTR LPARAM, LRESULT;
 typedef long HRESULT;
+typedef unsigned char BYTE;
 typedef unsigned char UCHAR;
 typedef unsigned int UINT;
 typedef long LONG;
@@ -97,6 +100,8 @@ typedef QToolBar REBARBANDINFO;
 // ADDLINUX
 typedef char* ACCEL;
 typedef char* HACCEL;
+typedef char* HCURSOR;
+typedef char* HFONT;
 typedef char* HIMAGELIST; // QListView
 typedef char* HINSTANCE;
 typedef char* HMENU;

@@ -55,7 +55,13 @@ protected :
     bool  _clicking;
 
     static LRESULT CALLBACK URLCtrlProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam){
+#ifdef NPP_PLATFORM_WINDOWS
         return ((URLCtrl *)(::GetWindowLongPtr(hwnd, GWLP_USERDATA)))->runProc(hwnd, Message, wParam, lParam);
+#else
+        // ADDLINUX
+        std::cout << "ADDLINUX URLCtrl::URLCtrlProc";
+        return 0;
+#endif
     };
     LRESULT runProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
 };

@@ -28,7 +28,10 @@
 
 #pragma once
 
+#include "NppPlatform.h"
+#ifdef NPP_PLATFORM_WINDOWS
 #include <windows.h>
+#endif
 
 // ATTENTION : It's a part of interface header, so don't include the others header here
 

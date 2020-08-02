@@ -28,8 +28,11 @@
 
 #pragma once
 
+#include "NppPlatform.h"
+#ifdef NPP_PLATFORM_WINDOWS
 #include <windows.h>
 #include <commctrl.h>
+#endif
 
 #include "DockingDlgInterface.h"
 #include "ansiCharPanel_rc.h"
