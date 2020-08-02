@@ -700,7 +700,7 @@ public:
 	generic_string toString() const // Return Notepad++ date format : YYYYMMDD
 	{
 		TCHAR dateStr[16];
-		wsprintf(dateStr, TEXT("%04u%02u%02u"), _year, _month, _day);
+		swprintf(dateStr, sizeof(dateStr), TEXT("%04u%02u%02u"), _year, _month, _day);
 		return dateStr;
 	}
 
@@ -1067,7 +1067,7 @@ public:
 			}
 
 			for (int i = 0 ; i < SCE_USER_KWLIST_TOTAL ; ++i)
-				wcscpy_s(this->_keywordLists[i], ulc._keywordLists[i]);
+				wcscpy(this->_keywordLists[i], ulc._keywordLists[i]);
 
 			for (int i = 0 ; i < SCE_USER_TOTAL_KEYWORD_GROUPS ; ++i)
 				_isPrefix[i] = ulc._isPrefix[i];
@@ -1594,7 +1594,7 @@ public:
 	generic_string getWinVerBitStr() const;
 	FindHistory & getFindHistory() {return _findHistory;};
 	bool _isFindReplacing = false; // an on the fly variable for find/replace functions
-	void safeWow64EnableWow64FsRedirection(BOOL Wow64FsEnableRedirection);
+	void safeWow64EnableWow64FsRedirection(bool Wow64FsEnableRedirection);
 
 	LocalizationSwitcher & getLocalizationSwitcher() {
 		return _localizationSwitcher;

@@ -29,6 +29,7 @@
 
 INT_PTR CALLBACK HashFromFilesDlg::run_dlgProc(UINT message, WPARAM wParam, LPARAM /*lParam*/)
 {
+#ifdef NPP_PLATFORM_WINDOWS
 	switch (message) 
 	{
 		case WM_INITDIALOG:
@@ -149,10 +150,16 @@ INT_PTR CALLBACK HashFromFilesDlg::run_dlgProc(UINT message, WPARAM wParam, LPAR
 		}
 	}
 	return FALSE;	
+#else
+	// ADDLINUX
+	std::cout << "ADDLINUX HashFromFilesDlg::run_dlgProc";
+	return 0;
+#endif
 }
 
 LRESULT run_textEditProc(WNDPROC oldEditProc, HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+#ifdef NPP_PLATFORM_WINDOWS
 	switch (message)
 	{
 		case WM_GETDLGCODE:
@@ -174,6 +181,11 @@ LRESULT run_textEditProc(WNDPROC oldEditProc, HWND hwnd, UINT message, WPARAM wP
 			break;
 	}
 	return ::CallWindowProc(oldEditProc, hwnd, message, wParam, lParam);
+#else
+	// ADDLINUX
+	std::cout << "ADDLINUX md5Dlgs.cpp - run_textEditProc";
+	return 0;
+#endif
 }
 
 void HashFromFilesDlg::setHashType(hashType hashType2set)
@@ -183,6 +195,7 @@ void HashFromFilesDlg::setHashType(hashType hashType2set)
 
 void HashFromFilesDlg::doDialog(bool isRTL)
 {
+#ifdef NPP_PLATFORM_WINDOWS
 	if (!isCreated())
 	{
 		create(IDD_HASHFROMFILES_DLG, isRTL);
@@ -199,10 +212,15 @@ void HashFromFilesDlg::doDialog(bool isRTL)
 
 	// Adjust the position in the center
 	goToCenter();
+#else
+	// ADDLINUX
+	std::cout << "ADDLINUX HashFromFilesDlg::doDialog";
+#endif
 };
 
 void HashFromTextDlg::generateHash()
 {
+#ifdef NPP_PLATFORM_WINDOWS
 	if (_ht != hash_md5 && _ht != hash_sha256)
 		return;
 
@@ -238,10 +256,16 @@ void HashFromTextDlg::generateHash()
 	{
 		::SetDlgItemTextA(_hSelf, IDC_HASH_RESULT_FOMTEXT_EDIT, "");
 	}
+#else
+	// ADDLINUX
+	std::cout << "ADDLINUX HashFromTextDlg::generateHash";
+#endif
+
 }
 
 void HashFromTextDlg::generateHashPerLine()
 {
+#ifdef NPP_PLATFORM_WINDOWS
 	int len = static_cast<int>(::SendMessage(::GetDlgItem(_hSelf, IDC_HASH_TEXT_EDIT), WM_GETTEXTLENGTH, 0, 0));
 	if (len)
 	{
@@ -293,10 +317,15 @@ void HashFromTextDlg::generateHashPerLine()
 	{
 		::SetDlgItemTextA(_hSelf, IDC_HASH_RESULT_FOMTEXT_EDIT, "");
 	}
+#else
+	// ADDLINUX
+	std::cout << "ADDLINUX HashFromTextDlg::generateHashPerLine";
+#endif
 }
 
 INT_PTR CALLBACK HashFromTextDlg::run_dlgProc(UINT message, WPARAM wParam, LPARAM /*lParam*/)
 {
+#ifdef NPP_PLATFORM_WINDOWS
 	switch (message) 
 	{
 		case WM_INITDIALOG:
@@ -377,6 +406,12 @@ INT_PTR CALLBACK HashFromTextDlg::run_dlgProc(UINT message, WPARAM wParam, LPARA
 		}
 	}
 	return FALSE;	
+#else
+	// ADDLINUX
+	std::cout << "ADDLINUX HashFromTextDlg::run_dlgProc";
+	return 0;
+#endif
+
 }
 
 void HashFromTextDlg::setHashType(hashType hashType2set)
@@ -386,6 +421,7 @@ void HashFromTextDlg::setHashType(hashType hashType2set)
 
 void HashFromTextDlg::doDialog(bool isRTL)
 {
+#ifdef NPP_PLATFORM_WINDOWS
 	if (!isCreated())
 	{
 		create(IDD_HASHFROMTEXT_DLG, isRTL);
@@ -399,4 +435,8 @@ void HashFromTextDlg::doDialog(bool isRTL)
 
 	// Adjust the position in the center
 	goToCenter();
+#else
+	// ADDLINUX
+	std::cout << "ADDLINUX HashFromTextDlg::doDialog";
+#endif
 };

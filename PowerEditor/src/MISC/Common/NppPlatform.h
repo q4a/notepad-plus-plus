@@ -95,12 +95,13 @@ typedef QToolBar REBARBANDINFO;
 #define VK_OEM_6    Qt::Key_BracketRight // or Key_BraceRight
 
 // ADDLINUX
-typedef char* HINSTANCE;
-typedef char* HIMAGELIST; // QListView
-typedef char* HWND; // QWidget
-typedef char* HACCEL;
-typedef char* HMENU;
 typedef char* ACCEL;
+typedef char* HACCEL;
+typedef char* HIMAGELIST; // QListView
+typedef char* HINSTANCE;
+typedef char* HMENU;
+typedef char* HMODULE;
+typedef char* HWND; // QWidget
 //typedef char* HDC;
 
 typedef LRESULT (CALLBACK* WNDPROC)(HWND, UINT, WPARAM, LPARAM);
@@ -129,6 +130,12 @@ typedef struct
     LONG        cx;
     LONG        cy;
 } SIZE;
+
+typedef struct
+{
+    DWORD dwLowDateTime;
+    DWORD dwHighDateTime;
+} FILETIME;
 
 inline int MulDiv(int nNumber, int nNumerator,int nDenominator)
 {

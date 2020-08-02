@@ -6848,7 +6848,7 @@ void NppParameters::addScintillaModifiedIndex(int index)
 	}
 }
 
-void NppParameters::safeWow64EnableWow64FsRedirection(BOOL Wow64FsEnableRedirection)
+void NppParameters::safeWow64EnableWow64FsRedirection(bool Wow64FsEnableRedirection)
 {
 	HMODULE kernel = GetModuleHandle(TEXT("kernel32"));
 	if (kernel)
