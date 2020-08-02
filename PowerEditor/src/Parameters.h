@@ -63,6 +63,9 @@ const int TAB_MULTILINE = 128;     //0000 1000 0000
 const int TAB_HIDE = 256;          //0001 0000 0000
 const int TAB_QUITONEMPTY = 512;   //0010 0000 0000
 
+#ifdef unix
+#undef unix
+#endif
 
 enum class EolType: std::uint8_t
 {

@@ -91,6 +91,7 @@ private:
 
 
 	void init() {
+#ifdef NPP_PLATFORM_WINDOWS
 	    HDC hdc = GetDC(NULL);
         if (hdc)
         {
@@ -101,6 +102,10 @@ private:
             _dpiY = GetDeviceCaps(hdc, LOGPIXELSY);
             ReleaseDC(NULL, hdc);
         }
+#else
+        // ADDLINUX
+        std::cout << "ADDLINUX DPIManager::init";
+#endif
 	};
 
     // This returns a 96-DPI scaled-down equivalent value for nIndex 
@@ -108,7 +113,12 @@ private:
     // X and Y versions are provided, though to date all Windows OS releases 
     // have equal X and Y scale values
     int scaledSystemMetricX(int nIndex) {
+#ifdef NPP_PLATFORM_WINDOWS
         return MulDiv(GetSystemMetrics(nIndex), 96, _dpiX); 
+#else
+        QRect rec = QGuiApplication::primaryScreen()->geometry();
+        return MulDiv(rec.width(), 96, _dpiX);
+#endif
     };
 
     // This returns a 96-DPI scaled-down equivalent value for nIndex 
@@ -117,7 +127,12 @@ private:
     // have equal X and Y scale values
     int scaledSystemMetricY(int nIndex) 
     {
+#ifdef NPP_PLATFORM_WINDOWS
         return MulDiv(GetSystemMetrics(nIndex), 96, _dpiY); 
+#else
+        QRect rec = QGuiApplication::primaryScreen()->geometry();
+        return MulDiv(rec.height(), 96, _dpiY);
+#endif
     }
 };
 

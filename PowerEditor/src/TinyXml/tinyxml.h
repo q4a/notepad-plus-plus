@@ -180,7 +180,7 @@ protected:
 	};
 
 	static const TCHAR*	SkipWhiteSpace( const TCHAR* );
-	inline static bool	IsWhiteSpace( int c )		{ return ( _istspace( static_cast<TCHAR>(c) ) || c == '\n' || c == '\r' ); }
+	inline static bool	IsWhiteSpace( int c )		{ return ( iswspace( static_cast<TCHAR>(c) ) || c == '\n' || c == '\r' ); }
 
 	virtual void StreamOut (TIXML_OSTREAM *) const = 0;
 

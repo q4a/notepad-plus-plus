@@ -105,7 +105,13 @@ public:
 	}
 
 	BYTE getAcceleratorModifiers() {
+#ifdef NPP_PLATFORM_WINDOWS
 		return ( FVIRTKEY | (_keyCombo._isCtrl?FCONTROL:0) | (_keyCombo._isAlt?FALT:0) | (_keyCombo._isShift?FSHIFT:0) );
+#else
+		// ADDLINUX
+		std::cout << "ADDLINUX Shortcut::getAcceleratorModifiers";
+		return 1;
+#endif
 	};
 
 	Shortcut & operator=(const Shortcut & sc) {
@@ -133,7 +139,13 @@ public:
 
 	virtual INT_PTR doDialog()
 	{
+#ifdef NPP_PLATFORM_WINDOWS
 		return ::DialogBoxParam(_hInst, MAKEINTRESOURCE(IDD_SHORTCUT_DLG), _hParent, dlgProc, reinterpret_cast<LPARAM>(this));
+#else
+		// ADDLINUX
+		std::cout << "ADDLINUX Shortcut::doDialog";
+		return 0;
+#endif
     };
 
 	virtual bool isValid() const { //valid should only be used in cases where the shortcut isEnabled().
@@ -238,7 +250,13 @@ public:
 
 	INT_PTR doDialog()
 	{
+#ifdef NPP_PLATFORM_WINDOWS
 		return ::DialogBoxParam(_hInst, MAKEINTRESOURCE(IDD_SHORTCUTSCINT_DLG), _hParent, dlgProc, reinterpret_cast<LPARAM>(this));
+#else
+		// ADDLINUX
+		std::cout << "ADDLINUX ScintillaKeyMap::doDialog";
+		return 0;
+#endif
     };
 
 	//only compares the internal KeyCombos, nothing else
@@ -354,6 +372,7 @@ friend class ShortcutMapper;
 public:
 	Accelerator() = default;
 	~Accelerator() {
+#ifdef NPP_PLATFORM_WINDOWS
 		if (_hAccTable)
 			::DestroyAcceleratorTable(_hAccTable);
 		if (_hIncFindAccTab)
@@ -361,6 +380,10 @@ public:
 		if (_hFindAccTab)
 			::DestroyAcceleratorTable(_hFindAccTab);
 		delete [] _pAccelArray;
+#else
+		// ADDLINUX
+		std::cout << "ADDLINUX Accelerator::~Accelerator";
+#endif
 	};
 	void init(HMENU hMenu, HWND menuParent) {
 		_hAccelMenu = hMenu;

@@ -51,18 +51,33 @@ public:
 	bool isCreated() const {return _hMenu != NULL;}
 	
 	void display(const POINT & p) const {
+#ifdef NPP_PLATFORM_WINDOWS
 		::TrackPopupMenu(_hMenu, TPM_LEFTALIGN, p.x, p.y, 0, _hParent, NULL);
+#else
+		// ADDLINUX
+		std::cout << "ADDLINUX ContextMenu::display";
+#endif
 	}
 
 	void enableItem(int cmdID, bool doEnable) const
 	{
+#ifdef NPP_PLATFORM_WINDOWS
 		int flag = doEnable ? (MF_ENABLED | MF_BYCOMMAND) : (MF_DISABLED | MF_GRAYED | MF_BYCOMMAND);
 		::EnableMenuItem(_hMenu, cmdID, flag);
+#else
+		// ADDLINUX
+		std::cout << "ADDLINUX ContextMenu::enableItem";
+#endif
 	}
 
 	void checkItem(int cmdID, bool doCheck) const
 	{
+#ifdef NPP_PLATFORM_WINDOWS
 		::CheckMenuItem(_hMenu, cmdID, MF_BYCOMMAND | (doCheck ? MF_CHECKED : MF_UNCHECKED));
+#else
+		// ADDLINUX
+		std::cout << "ADDLINUX ContextMenu::checkItem";
+#endif
 	}
 
 	HMENU getMenuHandle() const

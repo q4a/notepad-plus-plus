@@ -46,7 +46,12 @@ public :
 	void create(int iconSize, HINSTANCE hInst, int *iconIDArray, int iconIDArraySize);
 
 	void destroy() {
+#ifdef NPP_PLATFORM_WINDOWS
 		ImageList_Destroy(_hImglst);
+#else
+		// ADDLINUX
+		std::cout << "ADDLINUX IconList::destroy";
+#endif
 	};
 	HIMAGELIST getHandle() const {return _hImglst;};
 	void addIcon(int iconID) const;

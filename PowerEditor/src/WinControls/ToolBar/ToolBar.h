@@ -75,7 +75,12 @@ public :
 
 	virtual void destroy();
 	void enable(int cmdID, bool doEnable) const {
+#ifdef NPP_PLATFORM_WINDOWS
 		::SendMessage(_hSelf, TB_ENABLEBUTTON, cmdID, static_cast<LPARAM>(doEnable));
+#else
+		// ADDLINUX
+		std::cout << "ADDLINUX ToolBar::enable";
+#endif
 	};
 
 	int getWidth() const;
@@ -86,11 +91,22 @@ public :
 	void setToUglyIcons();
 
 	bool getCheckState(int ID2Check) const {
+#ifdef NPP_PLATFORM_WINDOWS
 		return bool(::SendMessage(_hSelf, TB_GETSTATE, ID2Check, 0) & TBSTATE_CHECKED);
+#else
+		// ADDLINUX
+		std::cout << "ADDLINUX ToolBar::getCheckState";
+		return true;
+#endif
 	};
 
 	void setCheck(int ID2Check, bool willBeChecked) const {
+#ifdef NPP_PLATFORM_WINDOWS
 		::SendMessage(_hSelf, TB_CHECKBUTTON, ID2Check, MAKELONG(willBeChecked, 0));
+#else
+		// ADDLINUX
+		std::cout << "ADDLINUX ToolBar::setCheck";
+#endif
 	};
 
 	toolBarStatusType getState() const {
@@ -129,6 +145,7 @@ private :
     std::vector<iconLocator> _customIconVect;
     TiXmlNode *_toolIcons = nullptr;
 
+#ifdef NPP_PLATFORM_WINDOWS
 	void setDefaultImageList() {
 		::SendMessage(_hSelf, TB_SETIMAGELIST, 0, reinterpret_cast<LPARAM>(_toolBarIcons.getDefaultLst()));
 	};
@@ -138,6 +155,18 @@ private :
 	void setDisableImageList() {
 		::SendMessage(_hSelf, TB_SETDISABLEDIMAGELIST, 0, reinterpret_cast<LPARAM>(_toolBarIcons.getDisableLst()));
 	};
+#else
+	// ADDLINUX
+	void setDefaultImageList() {
+		std::cout << "ADDLINUX ToolBar::setDefaultImageList";
+	};
+	void setHotImageList() {
+		std::cout << "ADDLINUX ToolBar::setHotImageList";
+	};
+	void setDisableImageList() {
+		std::cout << "ADDLINUX ToolBar::setDisableImageList";
+	};
+#endif
 
 	void reset(bool create = false);
 	void setState(toolBarStatusType state) {
@@ -152,9 +181,14 @@ public :
 	ReBar():Window() { usedIDs.clear(); };
 
 	virtual void destroy() {
+#ifdef NPP_PLATFORM_WINDOWS
 		::DestroyWindow(_hSelf);
 		_hSelf = NULL;
 		usedIDs.clear();
+#else
+		// ADDLINUX
+		std::cout << "ADDLINUX ReBar::destroy";
+#endif
 	};
 
 	void init(HINSTANCE hInst, HWND hPere);
