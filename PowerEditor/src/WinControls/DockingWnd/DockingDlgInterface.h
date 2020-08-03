@@ -48,14 +48,20 @@ public:
 
 	virtual void init(HINSTANCE hInst, HWND parent)
 	{
+#ifdef NPP_PLATFORM_WINDOWS
 		StaticDialog::init(hInst, parent);
 		TCHAR temp[MAX_PATH];
 		::GetModuleFileName(reinterpret_cast<HMODULE>(hInst), temp, MAX_PATH);
 		_moduleName = ::PathFindFileName(temp);
+#else
+		// ADDLINUX
+		std::cout << "ADDLINUX DockingDlgInterface::init";
+#endif
 	}
 
     void create(tTbData * data, bool isRTL = false)
 	{
+#ifdef NPP_PLATFORM_WINDOWS
 		assert(data != nullptr);
 		StaticDialog::create(_dlgID, isRTL);
 		TCHAR temp[MAX_PATH];
@@ -71,11 +77,20 @@ public:
 
 		// additional info
 		data->pszAddInfo	= NULL;
+#else
+		// ADDLINUX
+		std::cout << "ADDLINUX DockingDlgInterface::create";
+#endif
 	}
 
 	virtual void updateDockingDlg()
 	{
+#ifdef NPP_PLATFORM_WINDOWS
 		::SendMessage(_hParent, NPPM_DMMUPDATEDISPINFO, 0, reinterpret_cast<LPARAM>(_hSelf));
+#else
+		// ADDLINUX
+		std::cout << "ADDLINUX DockingDlgInterface::updateDockingDlg";
+#endif
 	}
 
     virtual void destroy() {}
@@ -84,7 +99,12 @@ public:
 	virtual void setForegroundColor(COLORREF) {}
 
 	virtual void display(bool toShow = true) const {
+#ifdef NPP_PLATFORM_WINDOWS
 		::SendMessage(_hParent, toShow ? NPPM_DMMSHOW : NPPM_DMMHIDE, 0, reinterpret_cast<LPARAM>(_hSelf));
+#else
+		// ADDLINUX
+		std::cout << "ADDLINUX DockingDlgInterface::display";
+#endif
 	}
 
 	bool isClosed() const {
@@ -102,6 +122,7 @@ public:
 protected :
 	virtual INT_PTR CALLBACK run_dlgProc(UINT message, WPARAM, LPARAM lParam)
 	{
+#ifdef NPP_PLATFORM_WINDOWS
 		switch (message) 
 		{
 
@@ -138,6 +159,11 @@ protected :
 				break;
 		}
 		return FALSE;
+#else
+		// ADDLINUX
+		std::cout << "ADDLINUX DockingDlgInterface::run_dlgProc";
+		return 0;
+#endif
 	};
 	
 	// Handles

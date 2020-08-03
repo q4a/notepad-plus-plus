@@ -59,10 +59,15 @@ public:
 	};
 
 	void setColumnText(size_t i, generic_string txt2Set) {
+#ifdef NPP_PLATFORM_WINDOWS
 		LVCOLUMN lvColumn;
 		lvColumn.mask = LVCF_TEXT;
 		lvColumn.pszText = const_cast<TCHAR *>(txt2Set.c_str());
 		ListView_SetColumn(_hSelf, i, &lvColumn);
+#else
+		// ADDLINUX
+		std::cout << "ADDLINUX ListView::setColumnText";
+#endif
 	}
 
 	// setStyleOption() should be called before init()
@@ -75,26 +80,49 @@ public:
 	void addLine(const std::vector<generic_string> & values2Add, LPARAM lParam = 0, int pos2insert = -1);
 	
 	size_t nbItem() const {
+#ifdef NPP_PLATFORM_WINDOWS
 		return ListView_GetItemCount(_hSelf);
+#else
+		// ADDLINUX
+		std::cout << "ADDLINUX ListView::nbItem";
+		return 0;
+#endif
 	};
 
 	long getSelectedIndex() const {
+#ifdef NPP_PLATFORM_WINDOWS
 		return ListView_GetSelectionMark(_hSelf);
+#else
+		// ADDLINUX
+		std::cout << "ADDLINUX ListView::getSelectedIndex";
+		return 0;
+#endif
 	};
 
 	void setSelection(int itemIndex) const {
+#ifdef NPP_PLATFORM_WINDOWS
 		ListView_SetItemState(_hSelf, itemIndex, LVIS_SELECTED | LVIS_FOCUSED, LVIS_SELECTED | LVIS_FOCUSED);
 		ListView_EnsureVisible(_hSelf, itemIndex, false);
 		ListView_SetSelectionMark(_hSelf, itemIndex);
+#else
+		// ADDLINUX
+		std::cout << "ADDLINUX ListView::setSelection";
+#endif
 	};
 
 	LPARAM getLParamFromIndex(int itemIndex) const;
 
 	bool removeFromIndex(size_t i)	{
+#ifdef NPP_PLATFORM_WINDOWS
 		if (i >= nbItem())
 			return false;
 
 		return (ListView_DeleteItem(_hSelf, i) == TRUE);
+#else
+		// ADDLINUX
+		std::cout << "ADDLINUX ListView::removeFromIndex";
+		return true;
+#endif
 	}
 
 	std::vector<size_t> getCheckedIndexes() const;
@@ -111,7 +139,13 @@ protected:
 	LRESULT runProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
 
 	static LRESULT CALLBACK staticProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam) {
+#ifdef NPP_PLATFORM_WINDOWS
 		return (((ListView *)(::GetWindowLongPtr(hwnd, GWLP_USERDATA)))->runProc(hwnd, Message, wParam, lParam));
+#else
+		// ADDLINUX
+		std::cout << "ADDLINUX ListView::staticProc";
+		return 0;
+#endif
 	};
 };
 

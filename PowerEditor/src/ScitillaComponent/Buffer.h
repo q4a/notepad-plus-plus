@@ -352,8 +352,13 @@ public:
 	}
 
 	void startMonitoring() { 
+#ifdef NPP_PLATFORM_WINDOWS
 		_isMonitoringOn = true; 
 		_eventHandle = ::CreateEvent(nullptr, TRUE, FALSE, nullptr);
+#else
+		// ADDLINUX
+		std::cout << "ADDLINUX Buffer::startMonitoring";
+#endif
 	};
 
 	HANDLE getMonitoringEvent() const {
@@ -361,9 +366,14 @@ public:
 	};
 
 	void stopMonitoring() { 
+#ifdef NPP_PLATFORM_WINDOWS
 		_isMonitoringOn = false;
 		::SetEvent(_eventHandle);
 		::CloseHandle(_eventHandle);
+#else
+		// ADDLINUX
+		std::cout << "ADDLINUX Buffer::stopMonitoring";
+#endif
 	};
 
 	bool isMonitoringOn() const { return _isMonitoringOn; };

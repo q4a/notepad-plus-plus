@@ -55,7 +55,7 @@ typedef long LONG;
 typedef unsigned short WORD;
 typedef unsigned long DWORD;
 
-typedef wchar_t TCHAR, *PTCHAR;
+typedef wchar_t TCHAR, *PTCHAR, *LPWSTR;
 typedef char* PTSTR, LPTSTR;
 typedef const char* LPCTSTR;
 typedef const wchar_t* LPCWSTR;
@@ -107,6 +107,7 @@ typedef char* HINSTANCE;
 typedef char* HMENU;
 typedef char* HMODULE;
 typedef char* HWND; // QWidget
+typedef char* NMHDR;
 //typedef char* HDC;
 
 typedef LRESULT (CALLBACK* WNDPROC)(HWND, UINT, WPARAM, LPARAM);

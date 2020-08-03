@@ -61,13 +61,23 @@ public:
 	void insertString(LPWSTR string2insert) const;
 
 	virtual void setBackgroundColor(int bgColour) const {
+#ifdef NPP_PLATFORM_WINDOWS
 		ListView_SetBkColor(_listView.getHSelf(), bgColour);
 		ListView_SetTextBkColor(_listView.getHSelf(), bgColour);
 		_listView.redraw(true);
+#else
+		// ADDLINUX
+		std::cout << "ADDLINUX AnsiCharPanel::setBackgroundColor";
+#endif
     };
 	virtual void setForegroundColor(int fgColour) const {
+#ifdef NPP_PLATFORM_WINDOWS
 		ListView_SetTextColor(_listView.getHSelf(), fgColour);
 		_listView.redraw(true);
+#else
+		// ADDLINUX
+		std::cout << "ADDLINUX AnsiCharPanel::setForegroundColor";
+#endif
     };
 	
 protected:
